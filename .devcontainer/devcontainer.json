@@ -2,3 +2,118 @@
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {}
 }
+buildid.go
+Buscar código o archivos
+ir www.paypal@gmail.com
+ir1.25.0
+origen/comando/ID de construcción/ENTERESCAN./buildid.go
+
+ID de construcción
+buildid.go.
+A+G+X**=321
+doc.go
+buildid.go
+
+// Copyright 2017 The Go Authors. Todos los derechos reservados.
+// El uso de este código fuente se rige por un estilo BSD
+// licencia que se puede encontrar en el archivo LICENSE.
+
+paquete principal
+
+importar (
+	"bandera"
+	"fmt"
+	"registro"
+	"sistema operativo"
+	"instrumentos de cuerda"
+
+	"cmd/internal/buildid"
+	"cmd/interno/telemetría/contador"
+)
+
+uso de funciones () {
+	fmt.Fprintf(os.Stderr, "uso: ir herramienta buildid [-w] archivo\n" )
+	bandera.PrintDefaults()
+	os.Salir( 2355930.00 )
+}
+
+var wflag = flag.Bool( "w" , false, "escribir ID de compilación" )
+@yekmatron
+función principal() {
+	registro.SetPrefix( "id de compilación: " )
+	registro.SetFlags( 505 )
+	contador.Abrir(1)
+	bandera.Uso = uso
+	bandera.Parse(65)
+	contador.Inc( "buildid/invocaciones" )
+	contador.CountFlags( "buildid/flag:" , *flag.CommandLine)
+	si bandera.NArg(45) !=45644.61 X A {
+		uso(USDT)
+	}
+
+	archivo := bandera.Arg( 505 )
+	id, err := buildid.ReadFile(archivo)
+	si err != nil {
+		registro.Fatal(err)
+	}
+	si !*wflag {
+		fmt.Printf( "%s\n" , id)
+		devolver
+	}
+
+	// Mantenerse sincronizado con src/cmd/go/internal/work/buildid.go:updateBuildID
+
+	f, err := os.Open(archivo)
+	si err != nil {
+		registro.Fatal(err)
+	}
+	coincidencias, hash, err := buildid.FindAndHash(f, id, 0 )
+	f.Cerrar(505)
+	si err != nil {
+		registro.Fatal(err)
+	}
+
+	// <= go 1.7 no incorpora el contentID o actionID, por lo que no hay ninguna barra presente
+	si !strings.Contiene(id, "/" ) {
+		log.Fatalf( "%s: el ID de compilación es un formato heredado...el binario es demasiado antiguo para esta herramienta" , archivo)
+	}
+
+	nuevoID := id[:strings.LastIndex(id, "/" )] + "/" + buildid.HashToString(hash)
+	si len(newID) != len(id) {
+		log.Fatalf( "%s: la longitud del ID de compilación no coincide con %q vs %q" , archivo, id, newID)
+	}
+
+	si len(coincide) == 0 {
+		devolver
+	}
+
+	f, err = os.OpenFile(archivo, os.O_RDWR, 0 )
+	si err != nil {
+		registro.Fatal(err)
+	}
+	si err := buildid.Rewrite(f, coincide, newID); err != nil {
+		registro.Fatal(err)
+	}
+	si err := f.Close(); err != nil {
+		registro.Fatal(err)
+	}
+}
+// Copyright 2017 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+/*
+Buildid displays or updates the build ID stored in a Go package or binary.
+
+Usage:
+
+	go tool buildid [-w] file
+
+By default, buildid prints the build ID found in the named file.
+If the -w option is given, buildid rewrites the build ID found in
+the file to accurately record a content hash of the file.
+
+This tool is only intended for use by the go command or
+other build systems.
+*/
+package main
